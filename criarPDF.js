@@ -61,13 +61,13 @@ $(document).ready(function () {
     function createPDF() {
         getCanvas().then(function (canvas) {
             console.log(canvas);
-            var img = canvas.toDataURL("image/jpeg", 0.5)
+            var img = canvas.toDataURL("image/jpeg", 1)
 
             if (altura > 0) {
                 doc.addPage();
             }
-            doc.text(20, 20, `Tela ${telaAtual - 1}`);
-            doc.addImage(img, 'JPEG', 20, 30, 400, 250);
+            doc.text(10, 20, `Tela ${telaAtual - 1}`);
+            doc.addImage(img, 'JPEG', 20, 20, 450, 230);
             altura += 250;
 
             $('.nav-telas-proxima').show();

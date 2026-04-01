@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerar PDF</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <input type="url" id="url_input" style="width: 50%"
+        value="https://efg.brasilia.fiocruz.br/ava/external/DAF/FAC/M1A1/index.html">
+
+    <button id="submit">Submeter</button>
+
+    <iframe id="viewer" style="width:100%; height:90vh;"></iframe>
+
+    <script>
+        $('#submit').on('click', function () {
+            var url = $('#url_input').val();
+            $('#viewer').attr('src', url);
+        });
+
+        $('#viewer').on('load', function () {
+            try {
+                var iframe = document.getElementById('viewer');
+                var doc = iframe.contentWindow.document;
+
+                // 🔹 lista de scripts para injetar
+                var scripts = [
+                    "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+                    "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js",
+                    "https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js",
+                    "https://efg.brasilia.fiocruz.br/ava/external/DAF/FAC/GerarPDF/criarPDF.js"
+                ];
+
+                // 🔹 função para carregar scripts em sequência (importante)
+                function loadScripts(index) {
+                    if (index >= scripts.length) return;
+
+                    var script = doc.createElement('script');
+                    script.src = scripts[index];
+
+                    script.onload = function () {
+                        loadScripts(index + 1);
+                    };
+
+                    doc.body.appendChild(script);
+                }
+
+                loadScripts(0);
+
+            } catch (e) {
+                console.error('Não foi possível acessar o iframe (domínio diferente)', e);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

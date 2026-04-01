@@ -21,7 +21,7 @@ $(document).ready(function () {
     var doc = new jsPDF({
         unit: 'px',
         format: 'a4',
-        // orientation: 'p',
+        orientation: 'landscape',
     });
 
     $('#create_pdf').on('click', function () {
@@ -36,7 +36,7 @@ $(document).ready(function () {
         doc = new jsPDF({
             unit: 'px',
             format: 'a4',
-            // orientation: 'p',
+            orientation: 'landscape',
         });
         $('.nav-telas-proxima').hide();
         $('.nav-telas-anterior').hide();
@@ -67,7 +67,7 @@ $(document).ready(function () {
                 doc.addPage();
             }
             doc.text(10, 20, `Tela ${telaAtual - 1}`);
-            doc.addImage(img, 'JPEG', 20, 20, 450, 230);
+            doc.addImage(img, 'JPEG', 20, 20, 650, 330);
             altura += 250;
 
             $('.nav-telas-proxima').show();
